@@ -1,0 +1,131 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User's RPG stats and profile information.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "xp": { "type": "integer" },
+        "level": { "type": "integer" },
+        "avatar": { "type": "object" },
+        "stats": { "type": "object" }
+      },
+      "required": ["uid", "xp", "level"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "A real-world task to be completed for XP.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "title": { "type": "string" },
+        "category": { "type": "string", "enum": ["study", "health", "coding", "personal", "other"] },
+        "priority": { "type": "string", "enum": ["low", "medium", "high"] },
+        "deadline": { "type": "string", "format": "date-time" },
+        "completed": { "type": "boolean" },
+        "xpReward": { "type": "integer" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "title", "completed", "xpReward"]
+    },
+    "Habit": {
+      "title": "Habit",
+      "description": "A recurring habit to track.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "title": { "type": "string" },
+        "frequency": { "type": "string", "enum": ["daily", "weekly"] },
+        "streak": { "type": "integer" },
+        "strength": { "type": "integer" },
+        "lastCompleted": { "type": "string", "format": "date-time" },
+        "xpReward": { "type": "integer" }
+      },
+      "required": ["uid", "title", "streak", "strength"]
+    },
+    "Skill": {
+      "title": "Skill",
+      "description": "A skill that can be leveled up.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "level": { "type": "integer" },
+        "xp": { "type": "integer" }
+      },
+      "required": ["uid", "name", "level", "xp"]
+    },
+    "JournalEntry": {
+      "title": "Journal Entry",
+      "description": "A daily journal entry with mood tracking.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "content": { "type": "string" },
+        "mood": { "type": "string", "enum": ["happy", "neutral", "sad"] },
+        "date": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "content", "mood", "date"]
+    },
+    "Achievement": {
+      "title": "Achievement",
+      "description": "An unlocked achievement badge.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "type": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "icon": { "type": "string" },
+        "unlockedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "title", "unlockedAt"]
+    },
+    "FocusSession": {
+      "title": "Focus Session",
+      "description": "A tracked focus session.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "duration": { "type": "integer" },
+        "type": { "type": "string" },
+        "startTime": { "type": "string", "format": "date-time" },
+        "completed": { "type": "boolean" }
+      },
+      "required": ["uid", "duration", "completed"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile data."
+    },
+    "/users/{userId}/tasks/{taskId}": {
+      "schema": "Task",
+      "description": "User's tasks."
+    },
+    "/users/{userId}/habits/{habitId}": {
+      "schema": "Habit",
+      "description": "User's habits."
+    },
+    "/users/{userId}/skills/{skillId}": {
+      "schema": "Skill",
+      "description": "User's skills."
+    },
+    "/users/{userId}/journal/{entryId}": {
+      "schema": "JournalEntry",
+      "description": "User's journal entries."
+    },
+    "/users/{userId}/achievements/{achievementId}": {
+      "schema": "Achievement",
+      "description": "User's unlocked achievements."
+    },
+    "/users/{userId}/focusSessions/{sessionId}": {
+      "schema": "FocusSession",
+      "description": "User's focus history."
+    }
+  }
+}
